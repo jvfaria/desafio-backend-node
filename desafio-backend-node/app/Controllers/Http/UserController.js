@@ -33,7 +33,7 @@ class UserController {
     }
   }
 
-  async down ({ params }) {
+  async destroy ({ params }) {
     try {
       const { id } = params
       const user = await User.find(id)
