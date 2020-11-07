@@ -1,23 +1,30 @@
 'use strict'
 
 const Category = use('App/Models/Category')
-const Database = use('Database')
 
 class CategoryController {
-  async index ({ request, response, params }) {
+  async index ({ request, response }) {
     try {
       const { key } = request.all()
       if (key) {
-        const categories = Database
-          .from('categories')
-          .where('name', 'like', `%${key}%`)
+        const categories = Category.query()
+          .select('categories.id',
+            'categories.name',
+            'categories.created_at',
+            'categories.updated_at')
+          .leftJoin('products', 'products.category_id', 'categories.id')
+          .where('categories.name', 'like', `%${key}%`)
+          .orWhere('products.name', 'like', `%${key}%`)
+          .with('products')
+          .fetch()
         return categories
       } else {
-        const categories = await Category.all()
+        const categories = await Category.query().with('products').fetch()
         return categories
       }
     } catch (error) {
-      return response.status(400).send({ error: { message: 'an error has occurred!' } })
+      console.log(error)
+      return response.status(400).json({ error: { message: 'an error has occurred!' } })
     }
   }
 
