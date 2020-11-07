@@ -25,8 +25,10 @@ Route.delete('/categories/:id', 'CategoryController.destroy')
 
 Route.get('/products/:key?', 'ProductController.index')
 Route.post('/products', 'ProductController.store')
+Route.post('/products/:id/balance', 'ProductController.addBalance')
 Route.put('/products/:id', 'ProductController.update')
 Route.delete('/products/:id', 'ProductController.destroy')
+Route.delete('/products/:id/balance', 'ProductController.removeBalance')
 
 Route.get('/images', 'ImageController.index')
 Route.post('/images', 'ImageController.store')
