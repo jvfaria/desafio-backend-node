@@ -6,8 +6,8 @@ const Schema = use('Schema')
 class CategoriesSchema extends Schema {
   up () {
     this.create('categories', (table) => {
-      table.increments().primary().unique()
-      table.string('name').notNullable()
+      table.increments()
+      table.string('name', 45)
       table.timestamps()
     })
   }

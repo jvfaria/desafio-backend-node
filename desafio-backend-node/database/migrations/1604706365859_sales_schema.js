@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class SalesSchema extends Schema {
   up () {
     this.create('sales', (table) => {
-      table.increments().primary().unique()
+      table.increments()
       table.datetime('date').notNullable()
       table.integer('user_id').notNullable()
       table.timestamps()

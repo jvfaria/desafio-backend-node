@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class ImagesSchema extends Schema {
   up () {
     this.create('images', (table) => {
-      table.increments().primary().unique()
+      table.increments()
       table.string('name', 45).notNullable()
       table.string('file_name', 255).notNullable()
       table.timestamps()
