@@ -22,7 +22,7 @@ class SalesProductSchema extends Schema {
         .onDelete('CASCADE')
         .notNullable()
       table.integer('quantity').notNullable()
-      table.decimal('total_price', 14, 2).notNullable()
+      table.integer('total_price').notNullable()
       table.timestamps()
     })
   }
