@@ -7,8 +7,8 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.post('/users', 'UserController.store')
 Route.get('/users/:key?', 'UserController.index')
+Route.post('/users', 'UserController.store')
 Route.delete('/users/:id', 'UserController.destroy')
 Route.put('/users/:id', 'UserController.update')
 
@@ -17,3 +17,16 @@ Route.post('/auth/logout', 'AuthController.destroy')
 
 Route.post('/forgot', 'RecoverPasswordController.store')
 Route.put('/forgot', 'RecoverPasswordController.update')
+
+Route.get('/categories/:key?', 'CategoryController.index')
+Route.post('/categories', 'CategoryController.store')
+Route.put('/categories/:id', 'CategoryController.update')
+Route.delete('/categories/:id', 'CategoryController.destroy')
+
+Route.get('/products/:key?', 'ProductController.index')
+Route.post('/products', 'ProductController.store')
+Route.put('/products/:id', 'ProductController.update')
+Route.delete('/products/:id', 'ProductController.destroy')
+
+Route.get('/images', 'ImageController.index')
+Route.post('/images', 'ImageController.store')
