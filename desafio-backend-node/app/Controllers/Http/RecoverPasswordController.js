@@ -28,8 +28,10 @@ class RecoverPasswordController {
       )
       return response.status(200).send({ message: 'Email sended! Check the email in order to recover your password!' })
     } catch (error) {
-      console.log(error)
-      return response.status(error.status).send({ error: error, message: 'Esse email não existe' })
+      return response.status(error.status).json({
+        message: 'This email is not registered',
+        error: error.message
+      })
     }
   }
 
@@ -42,7 +44,7 @@ class RecoverPasswordController {
 
       // Verify recover password token
       if (tokenExpired) {
-        return response.status(401).send({ error: { message: 'Token is expired!' } })
+        return response.status(401).send({ error: { message: 'Invalid token!' } })
       }
       const isSamePassword = await Hash.verify(password, user.password)
 

@@ -34,10 +34,9 @@ class ProductController {
         category_id: category.id,
         price: data.price
       }
-      const productCreated = await Product.create(product)
+      const productCreated = await Product.findOrCreate(product)
       return productCreated
     } catch (error) {
-      console.log(error)
       return response.status(400).send({ message: { error: 'an error has occurred' } })
     }
   }

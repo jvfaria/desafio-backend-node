@@ -4,88 +4,72 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with sales
- */
+const Sale = use('App/Models/Sale')
+const Database = use('Database')
 class SaleController {
-  /**
-   * Show a list of all sales.
-   * GET sales
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async index ({ request, response, view }) {
   }
 
-  /**
-   * Render a form to be used for creating a new sale.
-   * GET sales/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async create ({ request, response, auth }) {
+    try {
+      const data = request.all()
+      const user = await auth.getUser()
+      const sale = await Database.transaction(async (trx) => {
+        const products = await Database
+          .select('*')
+          .from('products')
+          .whereIn('id', data.products)
+        const saleObj = {
+          date: new Date(),
+          user_id: user.id,
+          created_at: new Date(),
+          updated_at: new Date()
+        }
+        const [sale] = await trx.insert(saleObj).into('sales')
+        // --------------------------------
+        products.map(async (product, index) => {
+          const productStockBalance = product.stock_balance
+          const newBalance = productStockBalance - data.quantity[index]
+          const obj = {
+            product_id: product.id,
+            sale_id: parseInt(sale),
+            quantity: data.quantity[index],
+            total_price: product.price * data.quantity[index],
+            created_at: new Date(),
+            updated_at: new Date()
+          }
+          await Database.table('sales_products')
+            .insert(obj)
+          const a = await Database.table('products')
+            .where('id', product.id)
+            .update({ stock_balance: newBalance })
+          if (a) {
+            trx.rollback()
+          }
+        })
+        return saleObj
+      })
+      return response.status(201)
+        .json({
+          sale
+        })
+    } catch (error) {
+      return response.status(400).send(error.message)
+    }
   }
 
-  /**
-   * Create/save a new sale.
-   * POST sales
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
   }
 
-  /**
-   * Display a single sale.
-   * GET sales/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
   }
 
-  /**
-   * Render a form to update an existing sale.
-   * GET sales/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async edit ({ params, request, response, view }) {
   }
 
-  /**
-   * Update sale details.
-   * PUT or PATCH sales/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a sale with id.
-   * DELETE sales/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
   }
 }
