@@ -1,4 +1,5 @@
 # Desafio BackEnd - NodeJS - OW Interactive 2020
+## Documentação dos endpoints no diretório: desafio-backend-node
 
 ## Sobre a OW Interactive
 
