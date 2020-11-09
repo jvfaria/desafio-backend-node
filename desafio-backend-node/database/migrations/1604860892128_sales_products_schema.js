@@ -3,7 +3,7 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class SalesProductSchema extends Schema {
+class SalesProductsSchema extends Schema {
   up () {
     this.create('sales_products', (table) => {
       table.increments()
@@ -32,4 +32,4 @@ class SalesProductSchema extends Schema {
   }
 }
 
-module.exports = SalesProductSchema
+module.exports = SalesProductsSchema

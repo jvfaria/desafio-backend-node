@@ -10,6 +10,9 @@ class UsersSchema extends Schema {
       table.string('name', 45).notNullable()
       table.string('email', 45).notNullable()
       table.string('password').notNullable()
+      table.enu('type', ['admin', 'client'])
+        .defaultTo('client')
+        .notNullable()
       table.timestamps()
     })
   }
