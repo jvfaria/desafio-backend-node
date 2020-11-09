@@ -5,7 +5,8 @@ const Model = use('Model')
 
 class Sale extends Model {
   products () {
-    return this.belongsToMany('App/Models/Products')
+    return this
+      .belongsToMany('App/Models/Products')
   }
 }
 
