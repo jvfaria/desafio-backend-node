@@ -5,56 +5,63 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Sale = use('App/Models/Sale')
+const SaleProduct = use('App/Models/SaleProduct')
 const Database = use('Database')
+
 class SaleController {
   async index ({ request, response, view }) {
+    try {
+      const sales = await Sale
+        .query()
+        .with('products')
+        .fetch()
+      return response.status(200).json(sales)
+    } catch (error) {
+      return response.status(400).send(error.message)
+    }
   }
 
   async create ({ request, response, auth }) {
     try {
+      // const trx = await Database.beginTransaction()
+      await auth.check()
       const data = request.all()
       const user = await auth.getUser()
-      const sale = await Database.transaction(async (trx) => {
-        const products = await Database
-          .select('*')
-          .from('products')
-          .whereIn('id', data.products)
-        const saleObj = {
-          date: new Date(),
-          user_id: user.id,
+
+      const sale = await Sale.create({
+        date: new Date(),
+        user_id: user.id,
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+
+      const products = await Database
+        .select('*')
+        .from('products')
+        .whereIn('id', data.product)
+
+      // this condition checks if was passed the right products ID's
+      // if (data.product.length !== products.length) {
+      //   await trx.rollback() // undo databases inserts
+      //   return response.status(400).send({ error: { message: 'One or more products ID were wrong passed' } })
+      // }
+      const saleProductsData = products.map((product, index) => {
+        const obj = {
+          product_id: product.id,
+          sale_id: sale.id,
+          quantity: data.quantity[index],
+          total_price: product.price * data.quantity[index],
           created_at: new Date(),
           updated_at: new Date()
         }
-        const [sale] = await trx.insert(saleObj).into('sales')
-        // --------------------------------
-        products.map(async (product, index) => {
-          const productStockBalance = product.stock_balance
-          const newBalance = productStockBalance - data.quantity[index]
-          const obj = {
-            product_id: product.id,
-            sale_id: parseInt(sale),
-            quantity: data.quantity[index],
-            total_price: product.price * data.quantity[index],
-            created_at: new Date(),
-            updated_at: new Date()
-          }
-          await Database.table('sales_products')
-            .insert(obj)
-          const a = await Database.table('products')
-            .where('id', product.id)
-            .update({ stock_balance: newBalance })
-          if (a) {
-            trx.rollback()
-          }
-        })
-        return saleObj
+        return obj
       })
-      return response.status(201)
-        .json({
-          sale
-        })
+      await SaleProduct.createMany(saleProductsData)
+
+      return response.status(201).json(sale) // finally returns the sale if everything gone right
     } catch (error) {
-      return response.status(400).send(error.message)
+      console.log(error)
+      return response.status(400).send(error)
     }
   }
 
@@ -71,6 +78,16 @@ class SaleController {
   }
 
   async destroy ({ params, request, response }) {
+    try {
+      const { id } = params
+      const sale = await Sale.findOrFail(id)
+      await sale.delete()
+    } catch (error) {
+      return response.status(error.status).send({
+        error: error.message,
+        message: 'Sale id not founded'
+      })
+    }
   }
 }
 
