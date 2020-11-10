@@ -5,14 +5,14 @@ const Schema = use('Schema')
 
 class SalesProductsSchema extends Schema {
   up () {
-    this.create('sales_products', (table) => {
+    this.create('sale_products', (table) => {
       table.increments()
       table.integer('product_id').notNullable()
         .unsigned()
         .references('id')
         .inTable('products')
         .onUpdate('CASCADE')
-        .onDelete('CASCADE')
+        .onDelete('RESTRICT')
         .notNullable()
       table.integer('sale_id').notNullable()
         .unsigned()
@@ -28,7 +28,7 @@ class SalesProductsSchema extends Schema {
   }
 
   down () {
-    this.drop('sales_products')
+    this.drop('sale_products')
   }
 }
 
