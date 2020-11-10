@@ -76,7 +76,7 @@ class ProductController {
 
       return response.status(200).send({ message: 'Product deleted' })
     } catch (error) {
-      return response.status(404).send({ error: { message: 'Category id not founded!' } })
+      return response.status(400).send({ error: { message: "Product ID didn't founded or the product has a sale and cannot be deleted" } })
     }
   }
 
