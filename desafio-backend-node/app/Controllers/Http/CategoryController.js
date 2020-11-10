@@ -7,21 +7,22 @@ class CategoryController {
     try {
       const { key } = request.all()
       if (key) {
-        const categories = Category.query()
+        const categories = await Category.query()
           .select('categories.id',
             'categories.name',
             'categories.created_at',
             'categories.updated_at')
-          .leftJoin('products', 'products.category_id', 'categories.id')
+          .innerJoin('products', 'products.category_id', 'categories.id')
+          .distinct()
           .where('categories.name', 'like', `%${key}%`)
           .orWhere('products.name', 'like', `%${key}%`)
           .with('products')
           .fetch()
-        return categories
-      } else {
-        const categories = await Category.query().with('products').fetch()
-        return categories
+
+        return response.status(200).json(categories)
       }
+      const categories = await Category.query().with('products').fetch()
+      return response.status(200).json(categories)
     } catch (error) {
       console.log(error)
       return response.status(400).json({ error: { message: 'an error has occurred!' } })
