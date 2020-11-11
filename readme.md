@@ -1,6 +1,6 @@
 # Desafio BackEnd - NodeJS - OW Interactive 2020
 ## Documentação dos endpoints:
-![Neste LINK](https://www.getpostman.com/collections/cfc20779f0f1d1993354)
+[Neste LINK](https://www.getpostman.com/collections/cfc20779f0f1d1993354)
 
 ## Sobre a OW Interactive
 
