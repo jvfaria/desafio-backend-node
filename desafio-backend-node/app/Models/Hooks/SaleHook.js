@@ -13,12 +13,4 @@ SaleHook.addProductBalance = async (saleInstance) => {
     product.stock_balance += obj.quantity
     product.save()
   })
-  //   const { product_id, quantity } = saleInstance
-  //   const product = await Product.findBy('id', product_id)
-  //   const newQuantity = product.stock_balance + quantity
-
-  //   product.merge({ stock_balance: newQuantity })
-
-//   await product.save()
-// }
 }
