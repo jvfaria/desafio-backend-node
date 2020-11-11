@@ -20,15 +20,23 @@ class SaleController {
             .where('created_at', '>=', request.from)
             .where('created_at', '<', request.to)
             .fetch()
-          return response.status(200).json(sales)
+
+          const total = await Database
+            .table('sale_products')
+            .sum('total_price as total')
+            .where('sale_id', sales.toJSON()[0].id)
+          return response.status(200).json({ sales: sales, total })
         } else {
           const sales = await Sale
             .query()
             .with('products')
             .where('user_id', request.user.id)
             .fetch()
-
-          return response.status(200).json(sales)
+          const total = await Database
+            .table('sale_products')
+            .sum('total_price as total')
+            .where('sale_id', sales.toJSON()[0].id)
+          return response.status(200).json({ sales: sales, total })
         }
       } else {
         if (request.filter) {
@@ -38,13 +46,21 @@ class SaleController {
             .where('created_at', '>=', request.from)
             .where('created_at', '<', request.to)
             .fetch()
-          return response.status(200).json(sales)
+          const total = await Database
+            .table('sale_products')
+            .sum('total_price as total')
+            .where('sale_id', sales.toJSON()[0].id)
+          return response.status(200).json({ sales: sales, total })
         } else {
           const sales = await Sale
             .query()
             .with('products')
             .fetch()
-          return response.status(200).json(sales)
+          const total = await Database
+            .table('sale_products')
+            .sum('total_price as total')
+            .where('sale_id', sales.toJSON()[0].id)
+          return response.status(200).json({ sales: sales, total })
         }
       }
     } catch (error) {

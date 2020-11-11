@@ -16,19 +16,17 @@ Route.get('/users/:key?', 'UserController.index')
 Route.post('/forgot', 'RecoverPasswordController.store')
 Route.put('/forgot', 'RecoverPasswordController.update')
 
+Route.get('/categories/:key?', 'CategoryController.index')
+Route.get('/products/:key?', 'ProductController.index')
+
+Route.get('/images', 'ImageController.index')
 // LOGGED USER CLIENT ROUTES
 Route.group(() => {
   Route.post('/auth/logout', 'AuthController.destroy')
 
-  Route.get('/products/:key?', 'ProductController.index')
-
-  Route.get('/categories/:key?', 'CategoryController.index')
-
   Route.get('/sales/:from?/:to?', 'SaleController.index').middleware(['userGetSale'])
   Route.post('/sales', 'SaleController.create')
   Route.delete('/sales/:id', 'SaleController.destroy')
-
-  Route.get('/images', 'ImageController.index')
 }).middleware(['auth'])
 
 // LOGGED USER ADMIN ROUTES

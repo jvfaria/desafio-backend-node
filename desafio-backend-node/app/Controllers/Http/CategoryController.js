@@ -6,6 +6,7 @@ class CategoryController {
   async index ({ request, response }) {
     try {
       const { key } = request.all()
+      console.log('key')
       if (key) {
         const categories = await Category.query()
           .select('categories.id',
@@ -21,6 +22,7 @@ class CategoryController {
 
         return response.status(200).json(categories)
       }
+      console.log('key else')
       const categories = await Category.query().with('products').fetch()
       return response.status(200).json(categories)
     } catch (error) {
@@ -35,7 +37,7 @@ class CategoryController {
       const category = await Category.findOrCreate({ name: name }, { name: name })
       return category
     } catch (error) {
-      return response.status(400).send({ message: { error: 'an error has occurred' } })
+      return response.status(400).send({ error: { message: 'an error has occurred' } })
     }
   }
 
@@ -46,7 +48,7 @@ class CategoryController {
       const category = await Category.findByOrFail('id', id)
 
       category.name = name
-      category.save()
+      await category.save()
 
       return response.status(200).send({ category, message: 'Category updated!' })
     } catch (error) {

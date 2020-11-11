@@ -13,7 +13,7 @@ class Sale extends Model {
     return this
       .belongsToMany('App/Models/Product')
       .pivotTable('sale_products')
-      .withPivot(['quantity'])
+      .withPivot(['sale_id', 'quantity', 'total_price'])
   }
 
   salesProducts () {
