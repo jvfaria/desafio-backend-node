@@ -9,20 +9,59 @@ const SaleProduct = use('App/Models/SaleProduct')
 const Database = use('Database')
 
 class SaleController {
-  async index ({ request, response, view }) {
+  async index ({ request, response }) {
     try {
-      const sales = await Sale
-        .query()
-        .with('products')
-        .fetch()
-      return response.status(200).json(sales)
+      if (request.user.type === 'client') {
+        if (request.filter) {
+          const sales = await Sale
+            .query()
+            .with('products')
+            .where('user_id', request.user.id)
+            .where('created_at', '>=', request.from)
+            .where('created_at', '<', request.to)
+            .fetch()
+          return response.status(200).json(sales)
+        } else {
+          const sales = await Sale
+            .query()
+            .with('products')
+            .where('user_id', request.user.id)
+            .fetch()
+
+          return response.status(200).json(sales)
+        }
+      } else {
+        if (request.filter) {
+          const sales = await Sale
+            .query()
+            .with('products')
+            .where('created_at', '>=', request.from)
+            .where('created_at', '<', request.to)
+            .fetch()
+          return response.status(200).json(sales)
+        } else {
+          const sales = await Sale
+            .query()
+            .with('products')
+            .fetch()
+          return response.status(200).json(sales)
+        }
+      }
     } catch (error) {
-      return response.status(400).send(error.message)
+      return response.status(400).send({
+        error: error.message,
+        message: 'Invalid data informed'
+      })
     }
   }
 
   async create ({ request, response, auth }) {
     try {
+      // **** DUE TO A TRANSACTION (TRX) OBJECT TIMEOUT PROBLEM
+      // TO PERSIST DATA ON MY SYSTEM SQL SERVER
+      // I'VE MADE THE QUERIES
+      // WITHOUT TRANSACTIONS, WHICH IS NOT RECOMMENDED IN PRODUCTION.
+
       // const trx = await Database.beginTransaction()
       await auth.check()
       const data = request.all()
@@ -33,17 +72,17 @@ class SaleController {
         user_id: user.id,
         created_at: new Date(),
         updated_at: new Date()
-      })
+      }/*, trx */)
 
       const products = await Database
         .select('*')
         .from('products')
         .whereIn('id', data.product)
 
-      // this condition checks if was passed the right products ID's
+      // his condition checks if were passed the right products ID's
       // if (data.product.length !== products.length) {
       //   await trx.rollback() // undo databases inserts
-      //   return response.status(400).send({ error: { message: 'One or more products ID were wrong passed' } })
+      //   returnt response.status(400).send({ error: { message: 'One or more products ID were wrong passed' } })
       // }
       const saleProductsData = products.map((product, index) => {
         const obj = {
@@ -56,7 +95,7 @@ class SaleController {
         }
         return obj
       })
-      await SaleProduct.createMany(saleProductsData)
+      await SaleProduct.createMany(saleProductsData /*, trx */)
 
       return response.status(201).json(sale) // finally returns the sale if everything gone right
     } catch (error) {
@@ -69,6 +108,7 @@ class SaleController {
   }
 
   async show ({ params, request, response, view }) {
+    console.log(params)
   }
 
   async edit ({ params, request, response, view }) {
