@@ -25,7 +25,7 @@ class ExceptionHandler extends BaseExceptionHandler {
         .send(error.messages)
     }
 
-    return response.status(error.status).send({ error: error.message })
+    return response.status(error.status).send({ error: error.messages })
   }
 
   /**
