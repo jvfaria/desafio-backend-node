@@ -2,12 +2,21 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+
+/*
+The 'AUTH' (only clients) middleware controls if a user is logged in
+The 'ADMIN AUTH' (only admin) middleware checks wheter the user is trying to reach admin
+restricted routes
+*/
+
+// GLOBAL ROUTES
 Route.post('/auth/login', 'AuthController.store')
 Route.post('/users', 'UserController.store').validator('User')
 Route.get('/users/:key?', 'UserController.index')
 Route.post('/forgot', 'RecoverPasswordController.store')
 Route.put('/forgot', 'RecoverPasswordController.update')
 
+// LOGGED USER CLIENT ROUTES
 Route.group(() => {
   Route.post('/auth/logout', 'AuthController.destroy')
 
@@ -15,11 +24,14 @@ Route.group(() => {
 
   Route.get('/categories/:key?', 'CategoryController.index')
 
-  Route.get('/sales', 'SaleController.index').middleware(['userGetSale'])
+  Route.get('/sales/:from?/:to?', 'SaleController.index').middleware(['userGetSale'])
   Route.post('/sales', 'SaleController.create')
   Route.delete('/sales/:id', 'SaleController.destroy')
+
+  Route.get('/images', 'ImageController.index')
 }).middleware(['auth'])
 
+// LOGGED USER ADMIN ROUTES
 Route.group(() => {
   Route.post('/products', 'ProductController.store')
   Route.post('/products/balance/:id', 'ProductController.addBalance')
@@ -34,6 +46,5 @@ Route.group(() => {
   Route.delete('/users/:id', 'UserController.destroy')
   Route.put('/users/:id', 'UserController.update')
 
-  Route.get('/images', 'ImageController.index')
   Route.post('/images', 'ImageController.store')
 }).middleware(['auth', 'adminAuth'])
