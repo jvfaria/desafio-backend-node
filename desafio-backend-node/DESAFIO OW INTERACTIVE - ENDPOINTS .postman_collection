@@ -1,0 +1,1944 @@
+{
+	"info": {
+		"_postman_id": "583ef3c4-8347-4902-9927-52720037b0e5",
+		"name": "DESAFIO OW INTERACTIVE - ENDPOINTS DOC",
+		"description": "Endpoints doc for OW Interactive challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "LIST users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"users"
+							]
+						},
+						"description": "## Content\r\n- List all users \r\n- Filter users searching by name or email with one OPTIONAL query param **key**"
+					},
+					"response": [
+						{
+							"name": "LIST users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:53:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"João Vitor de Faria\",\n        \"email\": \"test@test.com\",\n        \"token\": null,\n        \"token_created_at\": null,\n        \"password\": \"$2a$10$YJ.LPyivqniH34gXApdEy.a2aRbzboD9E8HhK6aMWAj1LxTySuJwm\",\n        \"type\": \"admin\",\n        \"created_at\": \"2020-11-11 01:52:55\",\n        \"updated_at\": \"2020-11-11 01:52:55\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "DELETE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTYwNTA3MDQ5MiwiZXhwIjoxNjA1MDgxMjkyfQ.2G67enMCxZn003OkkU7NAGwUiDtWteveMXbsOMM-Ntw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Delete user by **id** param\r\n- Could be deleted **only** by a **admin** user \r\n- Should be passed an authorization token"
+					},
+					"response": [
+						{
+							"name": "DELETE user",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:55:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "CREATE user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"João Vitor de Faria\",\r\n\t\"email\": \"test@test.com\",\r\n\t\"password\": \"123456\",\r\n\t\"password_confirmation\": \"123456\",\r\n\t\"type\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"users"
+							]
+						},
+						"description": "# Content\r\n- Register a user \r\n- The name **max** chars is limited by 45 chars\r\n- The **type** attribute can be passed only for admin users, by default a client user type is created if you don't pass any value.\r\n- The email field needs to be an **valid** email \r\n- The password field is validated with **min** 6 chars and it needs a password confirmation"
+					},
+					"response": [
+						{
+							"name": "CREATE user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"João Vitor de Faria\",\r\n\t\"email\": \"test@test.com\",\r\n\t\"password\": \"123456\",\r\n\t\"password_confirmation\": \"123456\",\r\n\t\"type\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "260"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:52:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered !\",\n    \"user\": {\n        \"name\": \"João Vitor de Faria\",\n        \"email\": \"test@test.com\",\n        \"password\": \"$2a$10$YJ.LPyivqniH34gXApdEy.a2aRbzboD9E8HhK6aMWAj1LxTySuJwm\",\n        \"type\": \"admin\",\n        \"created_at\": \"2020-11-11 01:52:55\",\n        \"updated_at\": \"2020-11-11 01:52:55\",\n        \"id\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "UPDATE user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTYwNTA3MDQ5MiwiZXhwIjoxNjA1MDgxMjkyfQ.2G67enMCxZn003OkkU7NAGwUiDtWteveMXbsOMM-Ntw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"João Vitor de Faria\",\r\n\t\"email\": \"teste@update.com\",\r\n\t\"password\": \"1234567\",\r\n\t\"type\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Edit user attributes"
+					},
+					"response": [
+						{
+							"name": "UPDATE user",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"João Vitor de Faria\",\r\n\t\"email\": \"teste@update.com\",\r\n\t\"password\": \"1234567\",\r\n\t\"type\": \"admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/users/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"users",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "261"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:55:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"João Vitor de Faria\",\n    \"email\": \"teste@update.com\",\n    \"token\": null,\n    \"token_created_at\": null,\n    \"password\": \"$2a$10$07GaVYLL67Iyj1TY7FapV.7ro39x.8yK0L7rvZwxvTXB1trc2dNk6\",\n    \"type\": \"admin\",\n    \"created_at\": \"2020-11-11 01:52:55\",\n    \"updated_at\": \"2020-11-11 01:55:24\"\n}"
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n### Users endpoints :\r\n- Implement endpoints to register, edit and delete users.\r\n- Implement an endpoint that lists all users with the possibility of searching by keyword (search by name or email)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3e71b570-8d09-4378-bdf7-9c53985af080",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "38dab23f-0f93-47bc-8def-5bbb74235c09",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\" : \"test@test.com\",\r\n\t\"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "## Content\r\n- Login endpoint in order to create a session. Returns a token which is requested in anothers endpoints"
+					},
+					"response": [
+						{
+							"name": "LOGIN",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"email\" : \"test@test.com\",\r\n\t\"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "281"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:54:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"type\": \"bearer\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTYwNTA3MDQ5MiwiZXhwIjoxNjA1MDgxMjkyfQ.2G67enMCxZn003OkkU7NAGwUiDtWteveMXbsOMM-Ntw\",\n    \"refreshToken\": \"f0f8eec8ad78bf78ef921a930de9394f0sd/Q7s2bNVWVmkXn4Zh3cTLjpjKOI0Pl/Hf4p4kEaudoVMc6JMK1AikWbOAM85I\"\n}"
+						}
+					]
+				},
+				{
+					"name": "LOGOUT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUsImlhdCI6MTYwNTA1NDQzNywiZXhwIjoxNjA1MDY1MjM3fQ.rQ8imrJIFpcQubgzartyMIFW3g_9z93GGd_2m4Rn-xg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "# Content\r\n- Logout endpoint in order to destroy a session"
+					},
+					"response": [
+						{
+							"name": "LOGOUT",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/auth/logout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"auth",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 00:28:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User logged out\"\n}"
+						}
+					]
+				},
+				{
+					"name": "RECOVER PASSWORD",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"email\": \"teste@teste.com\",\r\n\t\"redirect_url\":\"test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/forgot",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"forgot"
+							]
+						},
+						"description": "## Content\r\n- Check the informed email and send a template with the password recovery information\r\n- A 'token' attribute will be setted in users table \r\n- A token will be sended also on template, and will be necessary to update the password\r\n- From body it's passed also a redirect url, in order to redirect user to update his password\r\n## Testing\r\nYou can test this functionality using [Mail Trap tool](https://mailtrap.io/). It's necessary to create an account and change enviroment configs in ```<project-root>...config/mail.js```\r\n![Example](https://github.com/jvfaria/desafio-backend-node/blob/master/desafio-backend-node/assets/mailtrapexample.png)"
+					},
+					"response": [
+						{
+							"name": "RECOVER PASSWORD",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"email\": \"teste@teste.com\",\r\n\t\"redirect_url\":\"test.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/forgot",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"forgot"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "78"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 01:01:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email sended! Check the email in order to recover your password!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "UPDATE PASSWORD",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"token\": \"0afb1ecfd82e30d78e4b\",\r\n\t\"password\": \"alterpasswordtest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/forgot",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"forgot"
+							]
+						},
+						"description": "# Content\r\n- Update the user password based on a token generated in **RECOVER PASSWORD** route\r\n- The token received on email must be sended in 'token' attribute\r\n- The token will be validated based on when it was created and it is valid for **2 days**\r\n- Password cannot be same as previous password\r\n- When token is used, it becomes unusable and it is necessary to do all the recover proccess again"
+					},
+					"response": [
+						{
+							"name": "UPDATE PASSWORD",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"token\": \"3c237cf601f4a23a4f94\",\r\n\t\"password\": \"changepasswordtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/forgot",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"forgot"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "218"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:35:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"name\": \"João Vitor de Faria\",\n    \"email\": \"teste@teste.com\",\n    \"token\": null,\n    \"token_created_at\": null,\n    \"password\": \"changepasswordtest\",\n    \"type\": \"admin\",\n    \"created_at\": \"2020-11-10 21:59:56\",\n    \"updated_at\": \"2020-11-11 01:34:47\"\n}"
+						},
+						{
+							"name": "UPDATE PASSWORD",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"token\": \"e1a23aada832dedd9432\",\r\n\t\"password\": \"changepasswordtest\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/forgot",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"forgot"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "64"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:36:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Please change to another password not used before!\"\n}"
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n### Users register\r\n- Implement login and logout endpoints\r\n- Implement password recovery by email",
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "95a57b51-6d88-427e-a4fd-478f7489a296",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c22e61f5-e8fe-4fdc-ae1d-c4b298dd0245",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "CATEGORIES",
+			"item": [
+				{
+					"name": "LIST categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"categories"
+							]
+						},
+						"description": "## Content\r\n- List all categories\r\n- It can be filtered by category name or by a product that belongs to it\r\n- Using **key** parameter, it will be returned the **category** instance with **all** it's respectives products. For example: if you have two categories (Software and Hardware) and you search by a product name like \"Camtasia\" (which belongs to category software), it will be returned the **category** Software with all the products that belongs to it."
+					},
+					"response": [
+						{
+							"name": "LIST categories",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/categories?key=camtasia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "camtasia"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "433"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:23:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 3,\n        \"name\": \"Software\",\n        \"created_at\": \"2020-11-10 23:20:43\",\n        \"updated_at\": \"2020-11-10 23:20:43\",\n        \"products\": [\n            {\n                \"id\": 3,\n                \"image_id\": 1,\n                \"category_id\": 3,\n                \"name\": \"Camtasia Studio\",\n                \"stock_balance\": 1,\n                \"price\": 1100,\n                \"created_at\": \"2020-11-10 23:22:42\",\n                \"updated_at\": \"2020-11-10 23:22:42\"\n            },\n            {\n                \"id\": 4,\n                \"image_id\": 1,\n                \"category_id\": 3,\n                \"name\": \"Photoshop\",\n                \"stock_balance\": 1,\n                \"price\": 2600,\n                \"created_at\": \"2020-11-10 23:23:40\",\n                \"updated_at\": \"2020-11-10 23:23:40\"\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "CREATE category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA1ODM3NywiZXhwIjoxNjA1MDY5MTc3fQ.tQokM91yvYYUnGvTQCbh-pS4_Ml9PEoWczcRFVCwSYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Hardware\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/categories",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"categories"
+							]
+						},
+						"description": "## Content\r\n- Create a new category\r\n- It only can be created by a **admin** user"
+					},
+					"response": [
+						{
+							"name": "LIST categories Copy",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Hardware\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "96"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 01:33:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Hardware\",\n    \"created_at\": \"2020-11-10 22:33:47\",\n    \"updated_at\": \"2020-11-10 22:33:47\",\n    \"id\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "UPDATE category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA1ODM3NywiZXhwIjoxNjA1MDY5MTc3fQ.tQokM91yvYYUnGvTQCbh-pS4_Ml9PEoWczcRFVCwSYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Software\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/categories/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"categories",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Update a new category\r\n- It only can be Update by a **admin** user"
+					},
+					"response": [
+						{
+							"name": "UPDATE category",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Software\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "139"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 01:38:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"category\": {\n        \"id\": 1,\n        \"name\": \"Software\",\n        \"created_at\": \"2020-11-10 22:33:47\",\n        \"updated_at\": \"2020-11-10 22:38:58\"\n    },\n    \"message\": \"Category updated!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2NjI4MSwiZXhwIjoxNjA1MDc3MDgxfQ.yeF-68VKn1-4E2PYneodx2LEVdPWt45Q3D-knIpEB1U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/categories/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"categories",
+								"2"
+							]
+						},
+						"description": "## Content\r\n- Delete a category by id\r\n- It only can be deleted by a **admin** user\r\n- A category cannot be deleted if it has registered products"
+					},
+					"response": [
+						{
+							"name": "DELETE category",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:58:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Category deleted\"\n}"
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n\r\n- Implement endpoints for registering, editing and deleting categories.\r\n- Implement an endpoint for listing categories and the products of those categories with the possibility of searching for the name of the category or a product that belongs to it",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c3339ead-608c-4781-bc82-644a8b57fdbc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7e35d7d-5b40-4b7b-9d6a-f7e09a9c8258",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "PRODUCTS",
+			"item": [
+				{
+					"name": "LIST products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products"
+							]
+						},
+						"description": "## Content\r\n\r\n- List all products"
+					},
+					"response": [
+						{
+							"name": "LIST products",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/products?key",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"products"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": null
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "540"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:04:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"image_id\": 1,\n        \"category_id\": 2,\n        \"name\": \"SSD Kingston\",\n        \"stock_balance\": 3,\n        \"price\": 550,\n        \"created_at\": \"2020-11-10 23:03:53\",\n        \"updated_at\": \"2020-11-10 23:03:53\",\n        \"category\": {\n            \"id\": 2,\n            \"name\": \"Hardware\",\n            \"created_at\": \"2020-11-10 22:43:33\",\n            \"updated_at\": \"2020-11-10 22:43:33\"\n        }\n    },\n    {\n        \"id\": 2,\n        \"image_id\": 1,\n        \"category_id\": 2,\n        \"name\": \"RTX 2060 Super\",\n        \"stock_balance\": 2,\n        \"price\": 2690,\n        \"created_at\": \"2020-11-10 23:04:44\",\n        \"updated_at\": \"2020-11-10 23:04:44\",\n        \"category\": {\n            \"id\": 2,\n            \"name\": \"Hardware\",\n            \"created_at\": \"2020-11-10 22:43:33\",\n            \"updated_at\": \"2020-11-10 22:43:33\"\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "CREATE product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2MDA1OCwiZXhwIjoxNjA1MDcwODU4fQ.jQm_mvbQgWHvYse9J51sEVznwjf6C1iPG9KdPIw9OUM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"SSD Kingston\",\r\n\t\"stock_balance\": 3,\r\n\t\"image_file_name\": \"test.png\",\r\n\t\"category_name\": \"Hardware\",\r\n\t\"price\": \"550\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products"
+							]
+						},
+						"description": "## Content\r\n- Create a new product\r\n- It only can be created by a **admin** user\r\n- Field ```image_file_name``` will be passed the file name of the image and before creation will be converted to image_id\r\n- Field ```category_name``` will be passed the category name and before creation will be converted to category id"
+					},
+					"response": [
+						{
+							"name": "CREATE product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Photoshop\",\r\n\t\"stock_balance\": 1,\r\n\t\"image_file_name\": \"test.png\",\r\n\t\"category_name\": \"Software\",\r\n\t\"price\": \"2600\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "159"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:23:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Photoshop\",\n    \"stock_balance\": 1,\n    \"image_id\": 1,\n    \"category_id\": 3,\n    \"price\": \"2600\",\n    \"created_at\": \"2020-11-10 23:23:40\",\n    \"updated_at\": \"2020-11-10 23:23:40\",\n    \"id\": 4\n}"
+						}
+					]
+				},
+				{
+					"name": "UPDATE product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA1ODM3NywiZXhwIjoxNjA1MDY5MTc3fQ.tQokM91yvYYUnGvTQCbh-pS4_Ml9PEoWczcRFVCwSYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Others\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Update a new product\r\n- It only can be updated by a **admin** user"
+					},
+					"response": [
+						{
+							"name": "UPDATE category",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Software\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/categories/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "139"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 01:38:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"category\": {\n        \"id\": 1,\n        \"name\": \"Software\",\n        \"created_at\": \"2020-11-10 22:33:47\",\n        \"updated_at\": \"2020-11-10 22:38:58\"\n    },\n    \"message\": \"Category updated!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA1ODM3NywiZXhwIjoxNjA1MDY5MTc3fQ.tQokM91yvYYUnGvTQCbh-pS4_Ml9PEoWczcRFVCwSYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Others\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Delete a product by id\r\n- It only can be deleted by a **admin** user\r\n- A product cannot be deleted if it's in a sale request"
+					},
+					"response": [
+						{
+							"name": "DELETE product",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Others\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "29"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:27:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Product deleted\"\n}"
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n\r\n- Implement endpoints for registering, editing and deleting products\r\n- Implement endpoint for listing all products\r\n- Implement endpoint to add or remove product stock balance\r\n- Every registered product must belong to a category\r\n- A category that has products cannot be deleted",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "78ebfc63-b853-4a23-bf54-3c20bbbdbcab",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb1597f3-025b-4a5a-ab3f-fcccd17a6caa",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "IMAGES",
+			"item": [
+				{
+					"name": "LIST images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2MDA1OCwiZXhwIjoxNjA1MDcwODU4fQ.jQm_mvbQgWHvYse9J51sEVznwjf6C1iPG9KdPIw9OUM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/images",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"images"
+							]
+						},
+						"description": "## Content\r\n- List all images files\r\n- Can be viewed by **any** user logged in"
+					},
+					"response": [
+						{
+							"name": "LIST images",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/images",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"images"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "117"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:28:48 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"test\",\n        \"file_name\": \"test.png\",\n        \"created_at\": \"2020-11-10 23:01:13\",\n        \"updated_at\": \"2020-11-10 23:01:13\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "CREATE image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2MDA1OCwiZXhwIjoxNjA1MDcwODU4fQ.jQm_mvbQgWHvYse9J51sEVznwjf6C1iPG9KdPIw9OUM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"test\",\r\n\t\"file_name\": \"test.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/images",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"images"
+							]
+						},
+						"description": "## Content\r\n- Create a image file\r\n- Only can be created by **admin** user"
+					},
+					"response": [
+						{
+							"name": "CREATE image",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"test\",\r\n\t\"file_name\": \"test.png\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/images",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"images"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "115"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:01:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test\",\n    \"file_name\": \"test.png\",\n    \"created_at\": \"2020-11-10 23:01:13\",\n    \"updated_at\": \"2020-11-10 23:01:13\",\n    \"id\": 1\n}"
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n\r\n- Product-related image files",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SALES",
+			"item": [
+				{
+					"name": "LIST sales",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2NjI4MSwiZXhwIjoxNjA1MDc3MDgxfQ.yeF-68VKn1-4E2PYneodx2LEVdPWt45Q3D-knIpEB1U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/sales?from=2020-03-11&to=2020-11-11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"sales"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2020-03-11"
+								},
+								{
+									"key": "to",
+									"value": "2020-11-11"
+								}
+							]
+						},
+						"description": "## Content\r\n\r\n- List all sales\r\n- Filter by date bringing all products and total sales with filter by start and end date\r\n- Sending through an **admin** token, it will be returned all registered sales\r\n- Sending through an **client** token, it will be returned just the respective client registered sales\r\n\r\n### Filter\r\n- FROM: start date\r\n- TO: end date"
+					},
+					"response": [
+						{
+							"name": "LIST sales",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3333/sales?from=2020-03-11&to=2020-11-11",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"sales"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "2020-03-11"
+										},
+										{
+											"key": "to",
+											"value": "2020-11-11"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "866"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 04:27:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"sales\": [\n        {\n            \"id\": 1,\n            \"date\": \"2020-11-11T02:40:51.000Z\",\n            \"user_id\": 4,\n            \"created_at\": \"2020-11-10 23:40:50\",\n            \"updated_at\": \"2020-11-10 23:40:50\",\n            \"products\": [\n                {\n                    \"id\": 2,\n                    \"image_id\": 1,\n                    \"category_id\": 2,\n                    \"name\": \"RTX 2060 Super\",\n                    \"stock_balance\": 4,\n                    \"price\": 2690,\n                    \"created_at\": \"2020-11-10 23:04:44\",\n                    \"updated_at\": \"2020-11-11 00:45:40\",\n                    \"pivot\": {\n                        \"product_id\": 2,\n                        \"sale_id\": 1,\n                        \"quantity\": 2,\n                        \"total_price\": 5380\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"image_id\": 1,\n                    \"category_id\": 3,\n                    \"name\": \"Camtasia Studio\",\n                    \"stock_balance\": 3,\n                    \"price\": 1100,\n                    \"created_at\": \"2020-11-10 23:22:42\",\n                    \"updated_at\": \"2020-11-11 00:45:31\",\n                    \"pivot\": {\n                        \"product_id\": 3,\n                        \"sale_id\": 1,\n                        \"quantity\": 1,\n                        \"total_price\": 1100\n                    }\n                },\n                {\n                    \"id\": 4,\n                    \"image_id\": 1,\n                    \"category_id\": 3,\n                    \"name\": \"Photoshop\",\n                    \"stock_balance\": 0,\n                    \"price\": 2600,\n                    \"created_at\": \"2020-11-10 23:23:40\",\n                    \"updated_at\": \"2020-11-10 23:40:51\",\n                    \"pivot\": {\n                        \"product_id\": 4,\n                        \"sale_id\": 1,\n                        \"quantity\": 1,\n                        \"total_price\": 2600\n                    }\n                }\n            ]\n        }\n    ],\n    \"total\": [\n        {\n            \"total\": 9080\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "CREATE sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA2MDA1OCwiZXhwIjoxNjA1MDcwODU4fQ.jQm_mvbQgWHvYse9J51sEVznwjf6C1iPG9KdPIw9OUM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"SSD Kingston\",\r\n\t\"stock_balance\": 3,\r\n\t\"image_file_name\": \"test.png\",\r\n\t\"category_name\": \"Hardware\",\r\n\t\"price\": \"550\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products"
+							]
+						},
+						"description": "## Content\r\n- Create a new sale request\r\n- Every sale request made, a hook is triggered and subtract from stock requested products\r\n- It is passed to ```products``` field an array containing all products id's requested\r\n- It is passed to ```quantity``` field an array containing the **respective** quantities requested\r\n- The user id is check by your auth token, so no need to pass user id on the proccess of creating a sale"
+					},
+					"response": [
+						{
+							"name": "CREATE sale",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"product\": [2,3,4],\r\n\t\"quantity\": [2,1,1]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/sales",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"sales"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 02:40:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"date\": \"2020-11-11T02:40:50.764Z\",\n    \"user_id\": 4,\n    \"created_at\": \"2020-11-10 23:40:50\",\n    \"updated_at\": \"2020-11-10 23:40:50\",\n    \"id\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjMsImlhdCI6MTYwNTA1ODM3NywiZXhwIjoxNjA1MDY5MTc3fQ.tQokM91yvYYUnGvTQCbh-pS4_Ml9PEoWczcRFVCwSYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Others\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/products/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"products",
+								"1"
+							]
+						},
+						"description": "## Content\r\n- Cancel a sale request by id"
+					},
+					"response": [
+						{
+							"name": "DELETE sale",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\t\"name\": \"Others\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3333/sales/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3333",
+									"path": [
+										"sales",
+										"1"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 11 Nov 2020 05:04:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "## Business rules\r\n\r\n- Implement endpoints for sales order fulfillment\r\n- Every registered sale must subtract the quantity purchased from the product in its stock\r\n- Implement sales order cancellation endpoint\r\n- When canceling an order the product stock must be returned\r\n- A product with a sales order cannot be excluded.\r\n- List all sales orders bringing all products and total sales with filter by start and end date",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ae69928c-b746-40c3-a71c-5e35f11e0183",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7752ed1c-a1f1-4e1f-91b9-77c5b8493b41",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
